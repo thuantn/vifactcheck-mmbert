@@ -1,0 +1,3 @@
+--model jhu-clsp/mmBERT-small --split article --select bm25 --pooling cls --max_len 512 --eval_lens 256 --epochs 1 --limit 64 --out runs/smoke_bm25
+--model jhu-clsp/mmBERT-small --split official --input evidence --max_len 256 --epochs 1 --limit 64 --out runs/smoke_evidence
+--model jhu-clsp/mmBERT-small --split article --max_len 2048 --epochs 1 --limit 64 --out runs/smoke_2048

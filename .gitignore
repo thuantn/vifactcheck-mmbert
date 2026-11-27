@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+data/vifactcheck/
+runs*/
+CLAUDE.md
+LESSONS_LEARNED.md
+*.pdf
