@@ -23,6 +23,7 @@ data/sanity.py           article overlap, label skew, tokenizer  data/make_split
 jobs/*.txt               the runs, one line of train.py arguments each
 colab/run_jobs.sh        runs a jobs file on a Colab T4 (Colab CLI, WSL), fetching results after each job
 analysis.py              decision rules over results/main/
+analysis_cv.py           follow-up (docs/PREREG_cv.md): 5-fold cross-validation over results/cv/; data/make_cv.py builds it
 recipe.py                recipe choice + fp16 rule over results/grid/
 docs/PREREG.md           questions, runs, decision rules (registered before training)
 ```

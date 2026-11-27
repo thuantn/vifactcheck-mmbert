@@ -20,10 +20,14 @@ def official(name):
 
 
 def load_split(name, split):
-    """official: the dataset's own split; article: data/split_article.json (rows of the official files, article-disjoint)."""
+    """official: the dataset's own split; article: data/split_article.json (rows of the official files, article-disjoint);
+    cv0-cv4: data/split_cv.json (docs/PREREG_cv.md)."""
     if split == "official":
         return official(name)
-    rows = json.load(open("data/split_article.json"))[name]
+    if split == "article":
+        rows = json.load(open("data/split_article.json"))[name]
+    else:
+        rows = json.load(open("data/split_cv.json"))[split][name]
     src = {s: official(s) for s in {r[0] for r in rows}}
     return {k: [src[s][k][i] for s, i in rows] for k in src[rows[0][0]]}
 
@@ -130,7 +134,7 @@ def main():
     ap.add_argument("--model", default="jhu-clsp/mmBERT-base")
     ap.add_argument("--input", default="article", choices=["article", "evidence", "claim"])
     ap.add_argument("--max_len", type=int, default=2048)
-    ap.add_argument("--split", default="article", choices=["article", "official"])
+    ap.add_argument("--split", default="article", choices=["article", "official"] + [f"cv{k}" for k in range(5)])
     ap.add_argument("--select", default="", choices=["", "bm25"], help="bm25: BM25-selected article sentences up to max_len")
     ap.add_argument("--pooling", default="", choices=["", "mean", "cls"], help="ModernBERT classifier pooling (default: the checkpoint's)")
     ap.add_argument("--eval_lens", default="", help="extra test-time max_len values, comma-separated (eval only)")

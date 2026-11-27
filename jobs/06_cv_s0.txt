@@ -1,0 +1,10 @@
+--split cv0 --max_len 2048 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvA_f0_s0
+--split cv0 --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvE_f0_s0
+--split cv1 --max_len 2048 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvA_f1_s0
+--split cv1 --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvE_f1_s0
+--split cv2 --max_len 2048 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvA_f2_s0
+--split cv2 --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvE_f2_s0
+--split cv3 --max_len 2048 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvA_f3_s0
+--split cv3 --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvE_f3_s0
+--split cv4 --max_len 2048 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvA_f4_s0
+--split cv4 --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 6 --seed 0 --out runs/cvE_f4_s0

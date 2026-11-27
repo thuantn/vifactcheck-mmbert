@@ -14,7 +14,7 @@ while read -r line; do
   [ -n "$out" ] && [ ! -f "$OUT/$out/metrics.json" ] && echo "$line"
 done < "$JOBS" > "$TMP/jobs.txt"
 [ -s "$TMP/jobs.txt" ] || { echo "all runs already in $OUT"; exit 0; }
-tar -czf "$TGZ" train.py requirements.txt data/make_split.py data/split_article.json -C "$TMP" jobs.txt
+tar -czf "$TGZ" train.py requirements.txt data/make_split.py data/split_article.json data/split_cv.json -C "$TMP" jobs.txt
 cell() { printf '%%%%bash\ncd /content/vifc 2>/dev/null || true\n%s\n' "$1" | timeout 600 colab exec -s "$S" 2>&1; }
 
 colab new -s "$S" --gpu T4 < /dev/null 2>&1 | tail -1 || { echo "no T4 session"; exit 1; }
