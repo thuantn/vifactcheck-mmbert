@@ -1,0 +1,1 @@
+--split article --max_len 2048 --lr 2e-5 --pooling mean --epochs 2 --seed 0 --no_test --out runs/grid_L2048_lr2e-5_mean

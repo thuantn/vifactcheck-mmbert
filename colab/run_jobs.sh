@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 # Run train.py jobs on a Colab T4 with the Colab CLI (WSL), one after another, fetching results after each one.
 #   bash colab/run_jobs.sh <jobs file> [session]      jobs file: one line of train.py arguments per job (incl. --out runs/...)
-# A job whose <out>/metrics.json already exists on the VM is skipped. Results land in runs_colab/<jobs name>/.
+# A job whose <out>/metrics.json was already fetched (or exists on the VM) is skipped. Results land in runs_colab/<jobs name>/.
 # Free/paid runtimes can be reclaimed: finished jobs are fetched as they end, so a rerun only redoes the lost ones.
 set -uo pipefail
 JOBS=${1:?jobs file}; S=${2:-vifc}
 cd "$(dirname "$0")/.."
+export PATH=$HOME/.local/bin:$PATH PYTHON_KEYRING_BACKEND=${PYTHON_KEYRING_BACKEND:-keyrings.alt.file.PlaintextKeyring}
 OUT=runs_colab/$(basename "$JOBS" .txt); mkdir -p "$OUT"
 TMP=$(mktemp -d); TGZ=$TMP/code.tgz; trap 'rm -rf "$TMP"' EXIT
-cp "$JOBS" "$TMP/jobs.txt"
+while read -r line; do
+  out=$(echo "$line" | grep -oE -- "--out [^ ]+" | cut -d" " -f2)
+  [ -n "$out" ] && [ ! -f "$OUT/$out/metrics.json" ] && echo "$line"
+done < "$JOBS" > "$TMP/jobs.txt"
+[ -s "$TMP/jobs.txt" ] || { echo "all runs already in $OUT"; exit 0; }
 tar -czf "$TGZ" train.py requirements.txt data/make_split.py data/split_article.json -C "$TMP" jobs.txt
 cell() { printf '%%%%bash\ncd /content/vifc 2>/dev/null || true\n%s\n' "$1" | timeout 600 colab exec -s "$S" 2>&1; }
 
@@ -27,7 +32,8 @@ EOF
 mkdir -p runs; nohup bash run.sh > /content/jobs.log 2>&1 &'
 
 fetch() {
-  cell "tar -czf /content/out.tgz runs /content/jobs.log 2>/dev/null; ls -la /content/out.tgz" >/dev/null
+  # a failed tar must not leave an older archive to download (tar exit 1 = a log grew while being read: fine)
+  cell "rm -f /content/out.tgz; tar -czf /content/out.tmp runs /content/jobs.log 2>/dev/null; [ \$? -le 1 ] && mv /content/out.tmp /content/out.tgz" >/dev/null
   colab download -s "$S" /content/out.tgz "$OUT/out.tgz" 2>&1 | tail -1 && tar -xzf "$OUT/out.tgz" -C "$OUT"
 }
 fails=0; got=0

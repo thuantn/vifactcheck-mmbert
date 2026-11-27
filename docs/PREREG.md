@@ -46,6 +46,11 @@ fp16 check, on the first grid run at L = 2,048 (before any other run): metrics.j
 GradScaler skipped, separately after warmup; eval stops on non-finite logits. If any loss is non-finite after warmup,
 or more than 1% of the steps after warmup are skipped, every arm runs in fp32 and this is noted.
 
+Clarifications (27/11/2026, after a pre-launch code review, before any run): the first grid run is its own jobs file
+(`jobs/01a_fp16.txt`); the 1% is of `steps - warmup_steps`; non-finite eval logits in any grid run also count as an
+fp16 failure, and all 8 grid runs must finish at the same precision. A run's dev F1 is that of its best epoch; a tie
+between configs goes to the lower LR, then to mean pooling.
+
 ## Decision rules (article-disjoint test split)
 Per seed i: dF1_i = macro F1(A_i) - macro F1(B_i). CI = 95% two-level bootstrap, 10,000 draws: resample the 5 seed
 indices with replacement and the test articles with replacement (keeping their claims), then average dF1 over the drawn
