@@ -1,0 +1,57 @@
+{
+ "args": {
+  "model": "jhu-clsp/mmBERT-base",
+  "input": "article",
+  "max_len": 512,
+  "split": "article",
+  "select": "bm25",
+  "pooling": "cls",
+  "eval_lens": "",
+  "lr": 2e-05,
+  "epochs": 3,
+  "bs": 4,
+  "accum": 4,
+  "warmup": 0.06,
+  "seed": 2,
+  "fp32": false,
+  "pilot_steps": 0,
+  "no_test": false,
+  "limit": 0,
+  "out": "runs/E_s2"
+ },
+ "dev": [
+  {
+   "f1": 80.42,
+   "acc": 80.57,
+   "n": 664,
+   "epoch": 0
+  },
+  {
+   "f1": 84.05,
+   "acc": 84.19,
+   "n": 664,
+   "epoch": 1
+  },
+  {
+   "f1": 84.68,
+   "acc": 84.79,
+   "n": 664,
+   "epoch": 2
+  }
+ ],
+ "test": {
+  "512": {
+   "f1": 83.48,
+   "acc": 83.52,
+   "n": 1420,
+   "epoch": 2
+  }
+ },
+ "steps": 963,
+ "warmup_steps": 57,
+ "nan_losses": 0,
+ "nan_losses_after_warmup": 0,
+ "skipped_steps": 7,
+ "skipped_after_warmup": 0,
+ "secs": 924
+}
