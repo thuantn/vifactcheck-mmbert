@@ -39,7 +39,7 @@ fetch() {
 fails=0; got=0
 while true; do
   sleep 120
-  st=$(cell 'pgrep -f run.sh >/dev/null && echo "ST""ATE=RUN" || echo "ST""ATE=END"; echo done_runs=$(ls runs/*/metrics.json 2>/dev/null | wc -l)')
+  st=$(cell 'pgrep -fx "bash run.sh" >/dev/null && echo "ST""ATE=RUN" || echo "ST""ATE=END"; echo done_runs=$(ls runs/*/metrics.json 2>/dev/null | wc -l)')
   echo "$(date +%H:%M) $(echo "$st" | grep -oE 'STATE=[A-Z]+|done_runs=[0-9]+' | tr '\n' ' ')"
   n=$(echo "$st" | grep -oE 'done_runs=[0-9]+' | cut -d= -f2)
   if [ -n "$n" ] && [ "$n" -gt "$got" ]; then fetch && got=$n; fi
