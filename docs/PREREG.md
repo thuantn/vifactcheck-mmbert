@@ -66,6 +66,10 @@ one article resample shared by all seeds in a draw. H2's evidence length is that
 last visible character" is start >= that character's end offset. If any main run hits a non-finite value, every arm of
 its jobs file is rerun in fp32 and this is noted.
 
+D's LR grid result (28/11/2026, `results/dgrid/`, official dev, no test read for D): 1e-5 gave dev macro F1
+39.36 / 60.35 / 69.52 per epoch (still rising); 2e-5 stayed at 17.43 in all three epochs (the level of predicting one
+class), with no non-finite loss. Chosen: 1e-5. D is likely under-trained at 3 epochs.
+
 ## Decision rules (article-disjoint test split)
 Per seed i: dF1_i = macro F1(A_i) - macro F1(B_i). CI = 95% two-level bootstrap, 10,000 draws: resample the 5 seed
 indices with replacement and the test articles with replacement (keeping their claims), then average dF1 over the drawn

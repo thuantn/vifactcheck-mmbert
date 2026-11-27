@@ -1,0 +1,50 @@
+{
+ "args": {
+  "model": "FacebookAI/xlm-roberta-large",
+  "input": "article",
+  "max_len": 512,
+  "split": "official",
+  "select": "",
+  "pooling": "",
+  "eval_lens": "",
+  "lr": 1e-05,
+  "epochs": 3,
+  "bs": 4,
+  "accum": 4,
+  "warmup": 0.06,
+  "seed": 0,
+  "fp32": false,
+  "pilot_steps": 0,
+  "no_test": true,
+  "limit": 0,
+  "out": "runs/Dgrid_lr1e-5"
+ },
+ "dev": [
+  {
+   "f1": 39.36,
+   "acc": 49.52,
+   "n": 723,
+   "epoch": 0
+  },
+  {
+   "f1": 60.35,
+   "acc": 61.27,
+   "n": 723,
+   "epoch": 1
+  },
+  {
+   "f1": 69.52,
+   "acc": 69.71,
+   "n": 723,
+   "epoch": 2
+  }
+ ],
+ "test": {},
+ "steps": 948,
+ "warmup_steps": 56,
+ "nan_losses": 0,
+ "nan_losses_after_warmup": 0,
+ "skipped_steps": 7,
+ "skipped_after_warmup": 7,
+ "secs": 1615
+}
