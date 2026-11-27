@@ -57,6 +57,15 @@ L = 2,048 / 512 / mean: 2e-5 mean 73.22 / 75.80 / 74.51; 2e-5 cls 81.91 / 76.96 
 5e-5 cls 83.12 / 75.52 / 79.32. **Chosen: LR 2e-5, cls pooling**, ahead of 5e-5 cls by 0.12 on one seed: the rule
 decides, the two are not distinguishable. Every run was still improving at epoch 2.
 
+Clarifications before the main runs (27/11/2026, no test number exists; `analysis.py` is written and reviewed now):
+runs are `jobs/02_main.txt` (A, B, E, ordered by seed), `jobs/03_refs.txt` (mmBERT references), `jobs/04_dgrid.txt`
+(D's LR) and then D's three seeds. D's LR: seed 0,
+3 epochs, official dev, best-epoch macro F1, tie to 1e-5. C and Q use the mmBERT recipe; Q reads up to 512; majority =
+the commonest training label. CIs are bootstrap percentiles (H1/H3 two-sided 95%: 2.5th; H2 one-sided 95%: 5th), with
+one article resample shared by all seeds in a draw. H2's evidence length is that of the stripped string, and "after B's
+last visible character" is start >= that character's end offset. If any main run hits a non-finite value, every arm of
+its jobs file is rerun in fp32 and this is noted.
+
 ## Decision rules (article-disjoint test split)
 Per seed i: dF1_i = macro F1(A_i) - macro F1(B_i). CI = 95% two-level bootstrap, 10,000 draws: resample the 5 seed
 indices with replacement and the test articles with replacement (keeping their claims), then average dF1 over the drawn

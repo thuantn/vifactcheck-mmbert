@@ -1,0 +1,10 @@
+--split official --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --out runs/offA_s0
+--split official --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --out runs/offB_s0
+--split official --input evidence --max_len 1024 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --out runs/offC_s0
+--split official --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 1 --out runs/offA_s1
+--split official --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 1 --out runs/offB_s1
+--split official --input evidence --max_len 1024 --lr 2e-5 --pooling cls --epochs 3 --seed 1 --out runs/offC_s1
+--split official --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 2 --out runs/offA_s2
+--split official --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 2 --out runs/offB_s2
+--split official --input evidence --max_len 1024 --lr 2e-5 --pooling cls --epochs 3 --seed 2 --out runs/offC_s2
+--split official --input claim --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --out runs/offQ_s0

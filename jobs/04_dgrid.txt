@@ -1,0 +1,2 @@
+--model FacebookAI/xlm-roberta-large --split official --max_len 512 --lr 1e-5 --epochs 3 --seed 0 --no_test --out runs/Dgrid_lr1e-5
+--model FacebookAI/xlm-roberta-large --split official --max_len 512 --lr 2e-5 --epochs 3 --seed 0 --no_test --out runs/Dgrid_lr2e-5

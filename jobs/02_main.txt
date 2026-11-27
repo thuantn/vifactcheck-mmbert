@@ -1,0 +1,15 @@
+--split article --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --eval_lens 512,1024 --out runs/A_s0
+--split article --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --out runs/B_s0
+--split article --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 3 --seed 0 --out runs/E_s0
+--split article --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 1 --eval_lens 512,1024 --out runs/A_s1
+--split article --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 1 --out runs/B_s1
+--split article --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 3 --seed 1 --out runs/E_s1
+--split article --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 2 --eval_lens 512,1024 --out runs/A_s2
+--split article --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 2 --out runs/B_s2
+--split article --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 3 --seed 2 --out runs/E_s2
+--split article --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 3 --eval_lens 512,1024 --out runs/A_s3
+--split article --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 3 --out runs/B_s3
+--split article --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 3 --seed 3 --out runs/E_s3
+--split article --max_len 2048 --lr 2e-5 --pooling cls --epochs 3 --seed 4 --eval_lens 512,1024 --out runs/A_s4
+--split article --max_len 512 --lr 2e-5 --pooling cls --epochs 3 --seed 4 --out runs/B_s4
+--split article --max_len 512 --select bm25 --lr 2e-5 --pooling cls --epochs 3 --seed 4 --out runs/E_s4

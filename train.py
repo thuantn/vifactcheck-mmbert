@@ -203,6 +203,7 @@ def main():
         if a.pilot_steps and step >= a.pilot_steps:
             log["pilot"] = {"steps": step, "secs": round(time.time() - t0), "peak_gb": round(torch.cuda.max_memory_allocated() / 2**30, 1) if device == "cuda" else None}
             break
+        opt.zero_grad(set_to_none=True)  # free the trailing partial accumulation before eval (T4 memory)
         print("fp16", {k: v for k, v in log.items() if k.startswith(("nan_", "skipped_"))}, flush=True)
         d = score(predict(model, dev, a.bs * 2, tok.pad_token_id, device, amp))
         d["epoch"] = ep
