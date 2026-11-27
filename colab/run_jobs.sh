@@ -21,7 +21,9 @@ colab new -s "$S" --gpu T4 < /dev/null 2>&1 | tail -1 || { echo "no T4 session";
 colab upload -s "$S" "$TGZ" /content/vifc_code.tgz 2>&1 | tail -1
 cell 'mkdir -p /content/vifc && tar -xzf /content/vifc_code.tgz -C /content/vifc && cd /content/vifc && pip install -q "transformers==5.24.0" pyarrow huggingface_hub 2>&1 | tail -1; nvidia-smi --query-gpu=name --format=csv,noheader'
 # Each job: skip if done; status markers are built from two strings so a traceback echoing the cell never matches them.
-cell 'cat > run.sh <<"EOF"
+# The launch is verified (a lost connection once left run.sh unwritten and the poll read that as finished);
+# jobs.log marks a started runner, so a retry never starts a second one.
+launch='cat > run.sh <<"EOF"
 while read -r line; do
   [ -z "$line" ] && continue
   out=$(echo "$line" | grep -oE -- "--out [^ ]+" | cut -d" " -f2)
@@ -29,7 +31,10 @@ while read -r line; do
   python train.py $line > "$out.log" 2>&1 || echo "FAILED $out"
 done < jobs.txt
 EOF
-mkdir -p runs; nohup bash run.sh > /content/jobs.log 2>&1 &'
+[ -f /content/jobs.log ] || { mkdir -p runs; nohup bash run.sh > /content/jobs.log 2>&1 & sleep 2; }
+[ -f /content/jobs.log ] && echo "LAUN""CHED"'
+ok=0; for try in 1 2 3; do cell "$launch" | grep -q LAUNCHED && { ok=1; break; }; echo "launch failed ($try/3)"; sleep 30; done
+[ $ok = 1 ] || { colab stop -s "$S" < /dev/null 2>&1 | tail -1; exit 1; }
 
 fetch() {
   # a failed tar must not leave an older archive to download (tar exit 1 = a log grew while being read: fine)
