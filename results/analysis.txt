@@ -1,0 +1,38 @@
+article-disjoint test: 1420 claims, 209 articles
+A: macro F1 82.54 +- 1.80  acc 82.62 +- 1.79  per seed [85.26, 81.31, 81.24, 83.53, 81.37]  best epochs [2, 2, 2, 2, 2]
+B: macro F1 75.41 +- 0.35  acc 75.46 +- 0.33  per seed [75.57, 75.05, 75.93, 75.38, 75.15]  best epochs [2, 2, 1, 1, 2]
+E: macro F1 83.32 +- 0.58  acc 83.38 +- 0.60  per seed [82.93, 84.0, 83.48, 83.65, 82.54]  best epochs [1, 2, 2, 2, 1]
+A's adapters tested at L=512: macro F1 76.26 +- 1.30
+A's adapters tested at L=1024: macro F1 82.14 +- 1.77
+
+H1 A - B: dF1 per seed [9.7, 6.26, 5.31, 8.15, 6.22]  mean +7.13  seeds > 0: 5/5  95% CI [+5.10, +9.24]  -> HOLDS
+
+H3 A - E: dF1 per seed [2.33, -2.68, -2.24, -0.13, -1.17]  mean -0.78  seeds > 0: 1/5  95% CI [-2.74, +1.19]  -> FAILS
+
+subgroups: {'R': 837, 'S': 327, 'neither': 77, 'not found': 179}
+dAcc(S) +17.25  95% CI [+12.92, +21.67]  n=327  labels [27, 108, 192]
+   A per-class F1 in S (Supported, Refuted, NEI as labelled 0,1,2): [55.74, 74.63, 86.26]
+   B per-class F1 in S (Supported, Refuted, NEI as labelled 0,1,2): [11.18, 46.9, 73.92]
+dAcc(R) +3.11  95% CI [+0.96, +5.29]  n=837  labels [391, 251, 195]
+   A per-class F1 in R (Supported, Refuted, NEI as labelled 0,1,2): [89.61, 78.59, 80.77]
+   B per-class F1 in R (Supported, Refuted, NEI as labelled 0,1,2): [88.04, 75.52, 74.78]
+H2: dAcc(S) - dAcc(R) = +14.14, one-sided 95% lower bound +10.24  -> HOLDS
+
+official split (references, not decided on)
+offA: macro F1 83.58 +- 1.46  acc 83.71 +- 1.46  lr [2e-05]
+offB: macro F1 76.15 +- 1.08  acc 76.55 +- 0.89  lr [2e-05]
+offC: macro F1 87.24 +- 0.22  acc 87.24 +- 0.22  lr [2e-05]
+offQ: macro F1 52.02  acc 52.04  lr [2e-05]
+offD: macro F1 74.31 +- 0.35  acc 74.55 +- 0.42  lr [1e-05]
+majority class (article): macro F1 17.15  acc 34.65
+majority class (official): macro F1 17.32  acc 35.11
+
+fp16 counters after warmup (non-finite losses, skipped steps / steps)
+A: 0 nan 0/906, 0 nan 0/906, 0 nan 0/906, 0 nan 0/906, 0 nan 0/906
+B: 0 nan 0/906, 0 nan 0/906, 0 nan 0/906, 0 nan 0/906, 0 nan 0/906
+E: 0 nan 0/906, 0 nan 0/906, 0 nan 0/906, 0 nan 0/906, 0 nan 0/906
+offA: 0 nan 0/892, 0 nan 0/892, 0 nan 0/892
+offB: 0 nan 0/892, 0 nan 0/892, 0 nan 0/892
+offC: 0 nan 0/892, 0 nan 0/892, 0 nan 0/892
+offQ: 0 nan 0/892
+offD: 0 nan 3/892, 0 nan 2/892, 0 nan 2/892

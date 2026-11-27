@@ -1,6 +1,8 @@
 # Does reading the whole article help a Vietnamese fact-checker?
 
-**Status (27/11/2026): registered; recipe chosen on dev (LR 2e-5, cls pooling), no test set read yet.** Design and decision rules: [docs/PREREG.md](docs/PREREG.md).
+**Status (28/11/2026): first experiment finished; a follow-up is registered ([docs/PREREG_cv.md](docs/PREREG_cv.md)) and running.**
+**Reading the whole article beats reading its first 512 tokens (+7.1 macro F1), but not reading 512 tokens of BM25-selected
+sentences (-0.8).** Design and decision rules, written before the runs: [docs/PREREG.md](docs/PREREG.md).
 
 [ViFactCheck](https://arxiv.org/abs/2412.15308) (AAAI 2025) asks whether a Vietnamese news claim is Supported, Refuted or
 NEI given the article. Its encoder baselines read at most 512 tokens (XLM-R) or 256 (PhoBERT), but 80% of the articles
@@ -14,6 +16,45 @@ tests, with rules written before training:
 The decision uses an article-disjoint split built here (`data/split_article.json`): in the official split 753 of 758
 test articles also appear in train, which would let a model learn articles instead of reading them. The official split
 is used only to compare with the paper.
+
+## Results
+Article-disjoint test (1,420 claims, 209 articles), mmBERT-base, 5 seeds, macro F1. Full output of `analysis.py`:
+[results/analysis.txt](results/analysis.txt).
+
+| Arm | What it reads | Macro F1 | Train time per run (T4) |
+|---|---|---:|---:|
+| A | article, up to 2,048 tokens | 82.54 +- 1.80 | 43 min |
+| B | article, first 512 tokens | 75.41 +- 0.35 | 15 min |
+| E | BM25-selected sentences, 512 tokens | 83.32 +- 0.58 | 15 min |
+
+| Question (registered rule) | Measured | Verdict |
+|---|---|---|
+| H1: A beats B | +7.13, 95% CI [+5.10, +9.24], 5/5 seeds | **holds** |
+| H2: the gain is where B cannot see the evidence | accuracy +17.25 on those claims (n=327) vs +3.11 where B sees it (n=837); difference +14.14, one-sided lower bound +10.24 | **holds** |
+| H3: A beats E | -0.78, 95% CI [-2.74, +1.19], 1/5 seeds | **fails** |
+
+So on this data, picking the sentences relevant to the claim and reading 512 tokens is enough: it matches full-article
+reading at about a third of the training time. The interval does not show that E is better than A. Inference time and
+memory were not measured.
+
+Official split, references only (753 of 758 test articles are also in train):
+
+| Run | Macro F1 |
+|---|---:|
+| mmBERT-base, article 2,048 (3 seeds) | 83.58 +- 1.46 |
+| mmBERT-base, first 512 (3 seeds) | 76.15 +- 1.08 |
+| mmBERT-base, claim + gold evidence (3 seeds) | 87.24 +- 0.22 |
+| mmBERT-base, claim only (1 seed) | 52.02 |
+| XLM-R-large, 512, LR 1e-5 (3 seeds) | 74.31 +- 0.35 |
+| majority class | 17.32 |
+
+The paper reports 75.42 for XLM-R-large on the full-article task; recipes differ, and our XLM-R-large was still improving
+at its third and last epoch.
+
+**Limits.** One dataset, one model family. The article-disjoint split is ours, so its numbers are not comparable with the
+paper's tables. All five A runs peaked at the last epoch, so A may be under-trained (the question of the follow-up). The
+recipe was chosen on one seed, and the two best recipes were 0.12 apart. The claim-only run is far above the majority
+class: claims alone carry some label signal.
 
 ## Files
 ```text
