@@ -1,0 +1,44 @@
+{
+ "args": {
+  "model": "jhu-clsp/mmBERT-base",
+  "input": "article",
+  "max_len": 2048,
+  "split": "article",
+  "select": "",
+  "pooling": "mean",
+  "eval_lens": "",
+  "lr": 5e-05,
+  "epochs": 2,
+  "bs": 4,
+  "accum": 4,
+  "warmup": 0.06,
+  "seed": 0,
+  "fp32": false,
+  "pilot_steps": 0,
+  "no_test": true,
+  "limit": 0,
+  "out": "runs/grid_L2048_lr5e-5_mean"
+ },
+ "dev": [
+  {
+   "f1": 69.5,
+   "acc": 69.58,
+   "n": 664,
+   "epoch": 0
+  },
+  {
+   "f1": 81.15,
+   "acc": 81.33,
+   "n": 664,
+   "epoch": 1
+  }
+ ],
+ "test": {},
+ "steps": 642,
+ "warmup_steps": 38,
+ "nan_losses": 0,
+ "nan_losses_after_warmup": 0,
+ "skipped_steps": 5,
+ "skipped_after_warmup": 2,
+ "secs": 1613
+}

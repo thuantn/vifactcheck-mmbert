@@ -51,6 +51,12 @@ Clarifications (27/11/2026, after a pre-launch code review, before any run): the
 fp16 failure, and all 8 grid runs must finish at the same precision. A run's dev F1 is that of its best epoch; a tie
 between configs goes to the lower LR, then to mean pooling.
 
+Recipe grid result (27/11/2026, `results/grid/`, `python recipe.py`; no test set read). fp16 rule passed in all 8 runs
+(no non-finite loss; at most 2 of 604 steps after warmup skipped). Dev macro F1 (best epoch, always the second) at
+L = 2,048 / 512 / mean: 2e-5 mean 73.22 / 75.80 / 74.51; 2e-5 cls 81.91 / 76.96 / 79.44; 5e-5 mean 81.15 / 75.81 / 78.48;
+5e-5 cls 83.12 / 75.52 / 79.32. **Chosen: LR 2e-5, cls pooling**, ahead of 5e-5 cls by 0.12 on one seed: the rule
+decides, the two are not distinguishable. Every run was still improving at epoch 2.
+
 ## Decision rules (article-disjoint test split)
 Per seed i: dF1_i = macro F1(A_i) - macro F1(B_i). CI = 95% two-level bootstrap, 10,000 draws: resample the 5 seed
 indices with replacement and the test articles with replacement (keeping their claims), then average dF1 over the drawn

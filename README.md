@@ -1,6 +1,6 @@
 # Does reading the whole article help a Vietnamese fact-checker?
 
-**Status (27/11/2026): registered, not yet run.** Design and decision rules: [docs/PREREG.md](docs/PREREG.md).
+**Status (27/11/2026): registered; recipe chosen on dev (LR 2e-5, cls pooling), no test set read yet.** Design and decision rules: [docs/PREREG.md](docs/PREREG.md).
 
 [ViFactCheck](https://arxiv.org/abs/2412.15308) (AAAI 2025) asks whether a Vietnamese news claim is Supported, Refuted or
 NEI given the article. Its encoder baselines read at most 512 tokens (XLM-R) or 256 (PhoBERT), but 80% of the articles
@@ -22,6 +22,7 @@ data/fetch_stats.py      token lengths (mmBERT tokenizer)       data/evidence_po
 data/sanity.py           article overlap, label skew, tokenizer  data/make_split.py    the article-disjoint split
 jobs/*.txt               the runs, one line of train.py arguments each
 colab/run_jobs.sh        runs a jobs file on a Colab T4 (Colab CLI, WSL), fetching results after each job
+recipe.py                recipe choice + fp16 rule over results/grid/
 docs/PREREG.md           questions, runs, decision rules (registered before training)
 ```
 
