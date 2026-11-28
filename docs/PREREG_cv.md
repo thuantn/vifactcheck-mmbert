@@ -35,6 +35,10 @@ independent; fixed after the code review, before any run).
 - **Retrieval is enough** if the upper bound < +1.5.
 - Otherwise **inconclusive**.
 
+## Result (28/11/2026)
+Mean dF1 -0.56, article bootstrap [-1.37, +0.23], envelope [-1.45, +0.34], 0/5 folds positive: **retrieval is enough**
+(upper bound < +1.5). fp16 counters clean in all 20 runs. Output: results/analysis_cv.txt.
+
 ## Stated now
 The expected half-width is about 2 F1 points (a rough estimate), so "full article wins" needs a difference of about +2,
 "retrieval is enough" one of about -0.5 or lower, and anything between will most likely come out inconclusive. The t

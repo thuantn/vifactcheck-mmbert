@@ -1,0 +1,12 @@
+pooled out-of-fold: 5148 claims, 728 articles
+cvA: pooled macro F1 per seed [82.67, 81.74]
+   mean val F1 by epoch [71.88, 79.75, 79.87, 80.73, 81.04, 81.05]
+   best epochs [1, 5, 5, 2, 3, 5, 3, 3, 4, 2]
+   fp16 after warmup: 0 nan 0/1512, 0 nan 0/1512, 0 nan 0/1495, 0 nan 0/1495, 0 nan 0/1461, 0 nan 0/1461, 0 nan 0/1473, 0 nan 0/1473, 0 nan 0/1535, 0 nan 0/1535
+cvE: pooled macro F1 per seed [83.25, 82.27]
+   mean val F1 by epoch [74.88, 79.68, 79.8, 81.18, 81.26, 81.35]
+   best epochs [3, 5, 3, 3, 5, 4, 4, 3, 5, 1]
+   fp16 after warmup: 0 nan 0/1512, 0 nan 0/1512, 0 nan 0/1495, 0 nan 0/1495, 0 nan 0/1461, 0 nan 0/1461, 0 nan 0/1473, 0 nan 0/1473, 0 nan 0/1535, 0 nan 0/1535
+
+dF1 (A - E) per fold and seed: [[-1.9, -1.77], [-0.75, 0.05], [-0.16, 0.02], [-0.06, -0.39], [0.04, -0.67]]
+mean -0.56  folds > 0: 0/5  article bootstrap [-1.37, +0.23]  envelope with t(4) [-1.45, +0.34]  -> RETRIEVAL IS ENOUGH

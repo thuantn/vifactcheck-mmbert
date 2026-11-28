@@ -1,6 +1,6 @@
 # Does reading the whole article help a Vietnamese fact-checker?
 
-**Status (28/11/2026): first experiment finished; a follow-up is registered ([docs/PREREG_cv.md](docs/PREREG_cv.md)) and running.**
+**Status (28/11/2026): both experiments finished.** The follow-up ([docs/PREREG_cv.md](docs/PREREG_cv.md)) also found no gain from reading the full article.
 **Reading the whole article beats reading its first 512 tokens (+7.1 macro F1), but not reading 512 tokens of BM25-selected
 sentences (-0.8).** Design and decision rules, written before the runs: [docs/PREREG.md](docs/PREREG.md).
 
@@ -55,6 +55,20 @@ at its third and last epoch.
 paper's tables. All five A runs peaked at the last epoch, so A may be under-trained (the question of the follow-up). The
 recipe was chosen on one seed, and the two best recipes were 0.12 apart. The claim-only run is far above the majority
 class: claims alone carry some label signal.
+
+## Follow-up: 6 epochs, 5-fold cross-validation (registered after the first result)
+Question: is H3 failing only because the 2,048-token arm was under-trained? Both arms trained 6 epochs; 5 article-disjoint
+folds over the old train articles (5,148 claims, 728 articles), 2 seeds each. Same dataset, and the question was chosen after
+seeing the first result, so it is a replication, not an independent confirmation. Output: [results/analysis_cv.txt](results/analysis_cv.txt).
+
+| Arm | Pooled out-of-fold macro F1 (seed 0 / seed 1) |
+|---|---|
+| A: article, 2,048 tokens | 82.67 / 81.74 |
+| E: BM25 sentences, 512 tokens | 83.25 / 82.27 |
+
+A - E = **-0.56** (article bootstrap [-1.37, +0.23], with the t interval over the 5 folds [-1.45, +0.34]); 0 of 5 folds favour A.
+By the registered rule the upper bound is below +1.5: **retrieval is enough**. Longer training did not help A: mean
+validation F1 at epochs 3 and 6 was 79.87 and 81.05 for A, 79.80 and 81.35 for E.
 
 ## Files
 ```text
