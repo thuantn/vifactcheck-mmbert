@@ -1,6 +1,6 @@
 # Does reading the whole article help a Vietnamese fact-checker?
 
-**Status (28/11/2026): both experiments finished.** The follow-up ([docs/PREREG_cv.md](docs/PREREG_cv.md)) also found no gain from reading the full article.
+**Status (28/11/2026): both experiments finished** (short write-up: [docs/REPORT.md](docs/REPORT.md)). The follow-up ([docs/PREREG_cv.md](docs/PREREG_cv.md)) also found no gain from reading the full article.
 **Reading the whole article beats reading its first 512 tokens (+7.1 macro F1), but not reading 512 tokens of BM25-selected
 sentences (-0.8).** Design and decision rules, written before the runs: [docs/PREREG.md](docs/PREREG.md).
 
