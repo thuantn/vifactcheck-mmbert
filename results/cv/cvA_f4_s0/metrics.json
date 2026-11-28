@@ -1,0 +1,75 @@
+{
+ "args": {
+  "model": "jhu-clsp/mmBERT-base",
+  "input": "article",
+  "max_len": 2048,
+  "split": "cv4",
+  "select": "",
+  "pooling": "cls",
+  "eval_lens": "",
+  "lr": 2e-05,
+  "epochs": 6,
+  "bs": 4,
+  "accum": 4,
+  "warmup": 0.06,
+  "seed": 0,
+  "fp32": false,
+  "pilot_steps": 0,
+  "no_test": false,
+  "limit": 0,
+  "out": "runs/cvA_f4_s0"
+ },
+ "dev": [
+  {
+   "f1": 50.17,
+   "acc": 53.73,
+   "n": 469,
+   "epoch": 0
+  },
+  {
+   "f1": 81.31,
+   "acc": 81.24,
+   "n": 469,
+   "epoch": 1
+  },
+  {
+   "f1": 82.76,
+   "acc": 82.73,
+   "n": 469,
+   "epoch": 2
+  },
+  {
+   "f1": 84.07,
+   "acc": 84.22,
+   "n": 469,
+   "epoch": 3
+  },
+  {
+   "f1": 85.08,
+   "acc": 85.07,
+   "n": 469,
+   "epoch": 4
+  },
+  {
+   "f1": 84.39,
+   "acc": 84.43,
+   "n": 469,
+   "epoch": 5
+  }
+ ],
+ "test": {
+  "2048": {
+   "f1": 83.18,
+   "acc": 83.16,
+   "n": 980,
+   "epoch": 4
+  }
+ },
+ "steps": 1632,
+ "warmup_steps": 97,
+ "nan_losses": 0,
+ "nan_losses_after_warmup": 0,
+ "skipped_steps": 7,
+ "skipped_after_warmup": 0,
+ "secs": 4060
+}
